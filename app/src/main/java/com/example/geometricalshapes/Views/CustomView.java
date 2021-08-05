@@ -4,9 +4,11 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.Rect;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -17,8 +19,9 @@ public class CustomView  extends View {
     Paint p2;
     Paint p3;
     Paint p4;
-    int x,y;
-    Rect rect;
+    int x,y,SQUARE_SIZE;
+    float cx,cy,radious=200f;
+    Rect rect,rect1;
 
     public CustomView(Context context) {
         super(context);
@@ -41,23 +44,82 @@ public class CustomView  extends View {
         init(attrs);
     }
     public void init(AttributeSet attr) {
-        p1=new Paint();
-        p2=new Paint();
-        p3=new Paint();
-        p4=new Paint();
+        p1=new Paint(Paint.ANTI_ALIAS_FLAG);
+        p2=new Paint(Paint.ANTI_ALIAS_FLAG);
+        p3=new Paint(Paint.ANTI_ALIAS_FLAG);
+        p4=new Paint(Paint.ANTI_ALIAS_FLAG);
+        p1.setColor(Color.BLUE);
+        p2.setColor(Color.YELLOW);
+        p3.setColor(Color.RED);
         x= (int) getX();
         y= (int) getY();
         rect=new Rect();
+        rect1=new Rect();
+        SQUARE_SIZE=300;
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        rect.left=x;
-        rect.top=y;
-        rect.right=rect.left+100;
-        rect.bottom=rect.top+100;
-        p1.setColor(Color.BLUE);
+        //---------- square------
+        rect.left=x+50;
+        rect.top=y+50;
+        rect.right=rect.left+SQUARE_SIZE;
+        rect.bottom=rect.top+SQUARE_SIZE;
         canvas.drawRect(rect,p1);
+        //-------- circle-------
+
+        cx=rect.right+150+radious;
+        cy=rect.top+SQUARE_SIZE/2;
+        canvas.drawCircle(cx,cy,radious,p2);
+        //---------rectangle-----
+        rect1.left=x+50;
+        rect1.top=450;
+        rect1.right=rect1.left+500;
+        rect1.bottom=rect1.top+250;
+        canvas.drawRect(rect1,p3);
+        //----- Line-----------
+        int hw=100;
+        int x1=800;
+        int y1=250+SQUARE_SIZE;
+        Path linePath=new Path();
+        linePath.moveTo(x1,y1-hw);
+        linePath.lineTo(x1-hw,y1+hw);
+        linePath.lineTo(x1+hw,y1+hw);
+        linePath.lineTo(x1,y1-hw);
+        linePath.close();
+        canvas.drawPath(linePath,p4);
+    }
+    public void swapColor(){
+        p1.setColor(p1.getColor()==Color.BLUE?Color.RED:Color.BLUE);
+        p2.setColor(p2.getColor()==Color.YELLOW?Color.GREEN:Color.YELLOW);
+        p3.setColor(p3.getColor()==Color.RED?Color.MAGENTA:Color.RED);
+        postInvalidate();
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        boolean value= super.onTouchEvent(event);
+        switch(event.getAction()) {
+            case MotionEvent.ACTION_DOWN: {
+                float x=event.getX();
+                float y=event.getY();
+                if(rect.left <x && rect.right>x)
+                    if(rect.top<y && rect.bottom>y)
+                    {
+                        radious+=10f;
+                       postInvalidate();
+                    }
+                if(rect1.left <x && rect1.right>x)
+                    if(rect1.top<y && rect1.bottom>y)
+                    {
+                        radious-=10f;
+                        postInvalidate();
+                    }
+                        return true;
+            }
+
+        }
+        return  value;
     }
 }

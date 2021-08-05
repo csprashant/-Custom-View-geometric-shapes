@@ -4,20 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:onClick="swap"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     tools:context=".MainActivity">
 
     <com.example.geometricalshapes.Views.CustomView
         android:id="@+id/custview"
-        android:layout_width="match_parent"
-        android:layout_height="500dp" />
+        android:layout_width="610dp"
+        android:layout_height="match_parent" />
 
     <Button
         android:id="@+id/btn_swap"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="swap"
-        android:text="swap Color" />
+        android:text="swap Color"
+        tools:ignore="UsingOnClickInXml" />
 
 </LinearLayout>
