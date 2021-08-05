@@ -95,6 +95,7 @@ public class CustomView  extends View {
         p1.setColor(p1.getColor()==Color.BLUE?Color.RED:Color.BLUE);
         p2.setColor(p2.getColor()==Color.YELLOW?Color.GREEN:Color.YELLOW);
         p3.setColor(p3.getColor()==Color.RED?Color.MAGENTA:Color.RED);
+        p4.setColor(p4.getColor()==Color.GRAY?Color.CYAN:Color.GRAY);
         postInvalidate();
     }
 
