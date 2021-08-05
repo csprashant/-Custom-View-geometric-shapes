@@ -20,7 +20,7 @@ public class CustomView  extends View {
     Paint p3;
     Paint p4;
     int x,y,SQUARE_SIZE;
-    float cx,cy,radious=200f;
+    float cx,cy,radious=150f;
     Rect rect,rect1;
 
     public CustomView(Context context) {
@@ -51,6 +51,7 @@ public class CustomView  extends View {
         p1.setColor(Color.BLUE);
         p2.setColor(Color.YELLOW);
         p3.setColor(Color.RED);
+        p4.setColor(Color.GRAY);
         x= (int) getX();
         y= (int) getY();
         rect=new Rect();
@@ -69,18 +70,18 @@ public class CustomView  extends View {
         canvas.drawRect(rect,p1);
         //-------- circle-------
 
-        cx=rect.right+150+radious;
+        cx=rect.right+100+radious;
         cy=rect.top+SQUARE_SIZE/2;
         canvas.drawCircle(cx,cy,radious,p2);
         //---------rectangle-----
         rect1.left=x+50;
-        rect1.top=450;
+        rect1.top=rect.bottom+50;
         rect1.right=rect1.left+500;
         rect1.bottom=rect1.top+250;
         canvas.drawRect(rect1,p3);
         //----- Line-----------
         int hw=100;
-        int x1=800;
+        int x1=700;
         int y1=250+SQUARE_SIZE;
         Path linePath=new Path();
         linePath.moveTo(x1,y1-hw);
